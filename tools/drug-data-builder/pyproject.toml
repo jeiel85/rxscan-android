@@ -8,7 +8,9 @@ license = { text = "Apache-2.0" }
 authors = [
   { name = "RxScan maintainers" }
 ]
-dependencies = []
+dependencies = [
+  "cryptography>=42.0.0",
+]
 
 [project.scripts]
 rxscan-data = "rxscan_data.cli:main"
@@ -18,4 +20,3 @@ include = ["src", "tests"]
 pythonVersion = "3.11"
 typeCheckingMode = "strict"
 reportMissingTypeStubs = false
-

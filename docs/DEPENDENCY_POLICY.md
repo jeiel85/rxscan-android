@@ -12,16 +12,20 @@ local health-adjacent data.
 - account or social-login SDKs before a reviewed product need exists;
 - cloud OCR or scan-derived server search clients.
 
-## Current Goal 00 dependency surface
+## Current dependency surface
 
 - Android Gradle Plugin;
 - Kotlin;
 - AndroidX Core;
 - AndroidX Activity Compose;
 - Jetpack Compose UI and Material 3;
-- JUnit for local unit tests.
+- JUnit for local unit tests;
+- Python `cryptography` for Ed25519 signing and verification of public-data manifests.
 
 The repository policy check scans Gradle files for known analytics/ad SDK terms
 and verifies that the app manifest does not request Internet permission in Goal
 00.
 
+`cryptography` is limited to the offline data-builder package. It must not be
+added to the Android app, must not handle patient data, and must never write a
+private signing key to repository files or generated public artifacts.
