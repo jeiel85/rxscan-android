@@ -48,6 +48,26 @@ The implementation registry is in `config/source_registry.yaml` and `tools/drug-
 - Snapshot raw response bodies and hashes, but store request URLs only with `ServiceKey=<redacted>`.
 - CI uses synthetic fixtures only. Live fetches are local/operator actions until a protected secret workflow is deliberately added.
 
+## 401 Troubleshooting
+
+`HTTP 401: Unauthorized` means the request reached the public-data gateway, but the gateway did not accept the submitted `ServiceKey`.
+
+Check these in order:
+
+1. Use `일반 인증키 (Decoding)`, not the encoded key.
+2. Trim accidental whitespace before running a smoke test:
+
+   ```powershell
+   $env:DATA_GO_KR_SERVICE_KEY = $env:DATA_GO_KR_SERVICE_KEY.Trim()
+   $env:DATA_GO_KR_SERVICE_KEY.Length
+   ```
+
+3. Verify the target API shows an approved development account in data.go.kr, not only a submitted or waiting utilization request.
+4. Wait a few minutes after a new approval, then retry.
+5. Confirm the key is copied from the same account that submitted utilization requests for the MFDS APIs.
+
+Do not paste the key into chat, issue comments, README files, or screenshots.
+
 ## Unresolved Checks Before Public Data Publication
 
 - Confirm per-API operating-account approval mode and traffic limits after utilization approval.

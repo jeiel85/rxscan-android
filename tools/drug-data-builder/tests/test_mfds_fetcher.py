@@ -4,9 +4,13 @@ import json
 import sys
 import tempfile
 import unittest
+import urllib.error
 import urllib.parse
+from email.message import Message
+from io import BytesIO
 from pathlib import Path
 from typing import TypeAlias, cast
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -15,6 +19,7 @@ sys.path.insert(0, str(ROOT / "tools" / "drug-data-builder" / "src"))
 from rxscan_data.fetcher import (
     DuplicatePageError,
     FetchTimeoutError,
+    HttpRequestError,
     MalformedResponseError,
     MissingServiceKeyError,
     SchemaChangedError,
@@ -22,6 +27,7 @@ from rxscan_data.fetcher import (
     fetch_operation,
     normalized_json_lines,
     parse_mfds_json_page,
+    urllib_transport,
     write_build_artifacts,
 )
 from rxscan_data.mfds import find_operation, find_source
@@ -121,6 +127,26 @@ class MfdsFetcherTest(unittest.TestCase):
         self.assertEqual(calls, 2)
         self.assertNotIn("SECRET-KEY-123", str(context.exception))
         self.assertIn("<redacted>", str(context.exception))
+
+    def test_http_error_is_redacted_and_cli_catchable(self) -> None:
+        url = "https://apis.data.go.kr/example?serviceKey=SECRET-KEY-123&pageNo=1"
+        error = urllib.error.HTTPError(
+            url=url,
+            code=401,
+            msg="Unauthorized",
+            hdrs=Message(),
+            fp=BytesIO(b"SERVICE_KEY_IS_NOT_REGISTERED_ERROR"),
+        )
+
+        with patch("urllib.request.urlopen", side_effect=error):
+            with self.assertRaises(HttpRequestError) as context:
+                urllib_transport(url, timeout_seconds=1.0)
+
+        message = str(context.exception)
+        self.assertIn("HTTP 401", message)
+        self.assertIn("SERVICE_KEY_IS_NOT_REGISTERED_ERROR", message)
+        self.assertIn("serviceKey=<redacted>", message)
+        self.assertNotIn("SECRET-KEY-123", message)
 
     def test_malformed_json_fails_closed(self) -> None:
         with self.assertRaises(MalformedResponseError):

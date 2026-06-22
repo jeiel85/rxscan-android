@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from dataclasses import dataclass
@@ -25,6 +26,10 @@ class MissingServiceKeyError(DataBuilderError):
 
 
 class FetchTimeoutError(DataBuilderError):
+    pass
+
+
+class HttpRequestError(DataBuilderError):
     pass
 
 
@@ -117,8 +122,22 @@ def build_request_url(
 
 def urllib_transport(url: str, timeout_seconds: float) -> bytes:
     request = urllib.request.Request(url, headers={"User-Agent": "rxscan-data-builder/0.1"})
-    with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
-        return response.read()
+    try:
+        with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
+            return response.read()
+    except TimeoutError as exc:
+        raise FetchTimeoutError(f"Timed out fetching {redacted_url(url)}") from exc
+    except urllib.error.HTTPError as exc:
+        detail = _read_http_error_detail(exc)
+        message = f"HTTP {exc.code} fetching {redacted_url(url)}"
+        if detail:
+            message = f"{message}: {detail}"
+        raise HttpRequestError(message) from exc
+    except urllib.error.URLError as exc:
+        reason = exc.reason
+        if isinstance(reason, TimeoutError):
+            raise FetchTimeoutError(f"Timed out fetching {redacted_url(url)}") from exc
+        raise HttpRequestError(f"Network error fetching {redacted_url(url)}: {reason}") from exc
 
 
 def fetch_operation(
@@ -322,6 +341,16 @@ def _fetch_with_retries(url: str, transport: Transport, timeout_seconds: float, 
             if attempt == attempts:
                 raise FetchTimeoutError(f"Timed out fetching {redacted_url(url)}") from exc
     raise FetchTimeoutError(f"Timed out fetching {redacted_url(url)}")
+
+
+def _read_http_error_detail(exc: urllib.error.HTTPError) -> str:
+    try:
+        raw = exc.read(512)
+    except OSError:
+        return ""
+    if not raw:
+        return ""
+    return raw.decode("utf-8", errors="replace").strip().replace("\n", " ")[:240]
 
 
 def _canonical_json(value: JsonObject) -> str:

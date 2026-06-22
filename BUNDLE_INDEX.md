@@ -75,7 +75,7 @@ This index excludes `BUNDLE_INDEX.md` itself, generated build outputs, caches, a
 - `docs/design/README.design-bundle.md` - 2433 bytes - SHA-256 `680758b996e27ee6eafec3beadb7db607fb79b31a74025ea22be358f5b9ea21d`
 - `docs/ENGINEERING_BOOTSTRAP.md` - 2342 bytes - SHA-256 `365ea023a1d2e5713c02924ced12f36736d5578d7333822be82619a4c9f3a2f9`
 - `docs/index.html` - 8850 bytes - SHA-256 `ebb1ca1fa4372ecd2118a1a3230d2a30db9b14124401496ab7282e8eca531621`
-- `docs/MFDS_DATA_ACCESS.md` - 3127 bytes - SHA-256 `10c351c3480825ab1612971be7c20117627edd1e80e24333ecb89c407f73f003`
+- `docs/MFDS_DATA_ACCESS.md` - 3933 bytes - SHA-256 `44d9387f828ae9bf64c60ec862d648bd29596c5b3c2a86cde0fcaa19689c81fc`
 - `docs/privacy.html` - 2103 bytes - SHA-256 `bf7d448866a2753f563a772c8f4aa8d222b2c91330cab5dbd6f28510948aad8b`
 - `gradle.properties` - 182 bytes - SHA-256 `569d1fcab2fd35b08e46391d0098c1ecaa87d0b84da68893f072011dc3c1eab6`
 - `gradle/libs.versions.toml` - 1212 bytes - SHA-256 `34faebb1aaf181bcc25a3870f3535b8e15b8b5329a6b8d77fc43634121c769f7`
@@ -113,7 +113,7 @@ This index excludes `BUNDLE_INDEX.md` itself, generated build outputs, caches, a
 - `tools/drug-data-builder/src/rxscan_data/__main__.py` - 91 bytes - SHA-256 `9eb0f01f513140a4ed51bd942b4c5df9c009e7ebd59a7e510d0bc3484ad3c393`
 - `tools/drug-data-builder/src/rxscan_data/cli.py` - 4477 bytes - SHA-256 `7f32626ac601d484e6d7a345a934d482666c064e6de8c012ca6abca0cd1e3901`
 - `tools/drug-data-builder/src/rxscan_data/contracts.py` - 2648 bytes - SHA-256 `0fb987e9925a1de78eff856195e09fb3d2f7952f81720fde9c716ffaaf91c404`
-- `tools/drug-data-builder/src/rxscan_data/fetcher.py` - 12518 bytes - SHA-256 `7d503f214d4978eed8f6cf9f046df3273dfe92939863e4f7526fdbd5f7e54f1f`
+- `tools/drug-data-builder/src/rxscan_data/fetcher.py` - 13548 bytes - SHA-256 `03691c293117bba1d5eb3f0b64a739c9c316e3282d9d1df2901f231bb9abbd97`
 - `tools/drug-data-builder/src/rxscan_data/mfds.py` - 6322 bytes - SHA-256 `6946f3e34955edd31d76450d1a1f9ff0444950e4a6ea3ff7838f0bcdfbfe87d2`
 - `tools/drug-data-builder/tests/test_manifest_contract.py` - 1705 bytes - SHA-256 `08f2ffbab6b11786ba698ef1bc07aaf003503d9a5611b6fb3eb99bc9c0aa3875`
-- `tools/drug-data-builder/tests/test_mfds_fetcher.py` - 7328 bytes - SHA-256 `b23772bf7c4f478c0018e02fb644042a0f5441d1e67e0d4e04e9005f2c1fe294`
+- `tools/drug-data-builder/tests/test_mfds_fetcher.py` - 8304 bytes - SHA-256 `e99b0fc2768348e4a8c3ecd0988b98fba56d19627921357325b940a35dd9bc26`
