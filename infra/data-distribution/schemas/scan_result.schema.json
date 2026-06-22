@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/rxscan/scan-result.schema.json",
+  "title": "RxScan Local Scan Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "sessionId",
+    "state",
+    "engineVersions",
+    "medicationLines"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "sessionId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "REVIEW_REQUIRED",
+        "CONFIRMED",
+        "UNRESOLVED",
+        "FAILED"
+      ]
+    },
+    "engineVersions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ocr",
+        "parser",
+        "matcherPolicy",
+        "publicDb"
+      ],
+      "properties": {
+        "ocr": {
+          "type": "string"
+        },
+        "parser": {
+          "type": "string"
+        },
+        "matcherPolicy": {
+          "type": "string"
+        },
+        "publicDb": {
+          "type": "string"
+        }
+      }
+    },
+    "medicationLines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "lineId",
+          "rawText",
+          "matchStatus",
+          "candidates"
+        ],
+        "properties": {
+          "lineId": {
+            "type": "string"
+          },
+          "rawText": {
+            "type": "string"
+          },
+          "recognizedName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "strengthValue": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "strengthUnit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dosageForm": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "manufacturer": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "matchStatus": {
+            "type": "string",
+            "enum": [
+              "VERIFIED_IDENTIFIER",
+              "HIGH_CONFIDENCE_REVIEW",
+              "AMBIGUOUS",
+              "UNRESOLVED"
+            ]
+          },
+          "selectedItemCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "candidates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "itemCode",
+                "score",
+                "hardContradictions"
+              ],
+              "properties": {
+                "itemCode": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "hardContradictions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

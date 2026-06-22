@@ -1,0 +1,31 @@
+.gradle/
+.idea/
+.kotlin/
+build/
+captures/
+local.properties
+*.iml
+*.keystore
+*.jks
+*.p12
+*.pem
+*.key
+*.env
+__pycache__/
+.pytest_cache/
+.pyright/
+.venv/
+dist/
+*.egg-info/
+
+# Android build outputs
+*.apk
+*.aab
+*.ap_
+
+# Synthetic fixtures are allowed, real prescriptions are not.
+testdata/consented-deidentified/
+tools/drug-data-builder/snapshots/
+tools/drug-data-builder/raw/
+tools/drug-data-builder/out/
+

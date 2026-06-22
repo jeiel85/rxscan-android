@@ -1,0 +1,15 @@
+{
+  "body": {
+    "items": [
+      {
+        "itemSeq": "SYNTH-0001",
+        "itemName": "합성테스트정 10밀리그램",
+        "entpName": "합성제약",
+        "efcyQesitm": "합성 fixture 전용 문장입니다.",
+        "updateDe": "2026-06-22"
+      }
+    ],
+    "totalCount": 1
+  }
+}
+

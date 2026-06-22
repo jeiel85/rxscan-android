@@ -1,0 +1,48 @@
+policy_version: "1.0.0"
+
+decision:
+  mandatory_user_review: true
+  identifier_verified_state:
+    enabled: true
+    require_no_hard_contradictions: true
+
+  high_confidence_review:
+    minimum_score: 0.92
+    minimum_top_two_margin: 0.12
+    require_fields:
+      - product_name
+      - strength
+      - dosage_form
+    require_no_hard_contradictions: true
+    disallow_when_capture_overridden: true
+
+  ambiguous:
+    maximum_candidates_shown: 5
+
+weights:
+  product_name: 0.50
+  strength: 0.20
+  dosage_form: 0.12
+  manufacturer: 0.08
+  ingredient_context: 0.05
+  ocr_layout_quality: 0.05
+
+hard_contradictions:
+  - identifier_points_to_other_product
+  - strength_conflict
+  - dosage_form_conflict
+  - release_form_conflict
+  - route_conflict
+  - non_unique_product_manufacturer_conflict
+  - inactive_or_quarantined_record
+
+missing_field_behavior:
+  infer_missing_strength: false
+  infer_missing_dosage_form: false
+  infer_missing_suffix: false
+  infer_from_efficacy: false
+
+freshness:
+  current_max_age_days: 14
+  warning_max_age_days: 30
+  disable_current_dur_claim_after_days: 30

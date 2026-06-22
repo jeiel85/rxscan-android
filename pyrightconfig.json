@@ -1,0 +1,12 @@
+{
+  "include": [
+    "tools/drug-data-builder/src",
+    "tools/drug-data-builder/tests"
+  ],
+  "extraPaths": [
+    "tools/drug-data-builder/src"
+  ],
+  "typeCheckingMode": "strict",
+  "pythonVersion": "3.11",
+  "reportMissingTypeStubs": false
+}

@@ -1,0 +1,36 @@
+registry_version: "1.0.0"
+checked_date: "2026-06-22"
+
+sources:
+  - source_id: mfds_drug_approval
+    agency: "식품의약품안전처"
+    dataset: "의약품 제품 허가정보"
+    portal_url: "https://www.data.go.kr/data/15095677/openapi.do"
+    base_service: "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07"
+    expected_update: realtime
+    required: true
+
+  - source_id: mfds_easy_drug
+    agency: "식품의약품안전처"
+    dataset: "의약품개요정보(e약은요)"
+    portal_url: "https://www.data.go.kr/data/15075057/openapi.do"
+    endpoint: "https://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList"
+    expected_update: realtime
+    limitation: "일반의약품 중 공급실적이 있는 제품 중심"
+    required: false
+
+  - source_id: mfds_dur_product
+    agency: "식품의약품안전처"
+    dataset: "의약품안전사용서비스(DUR)품목정보"
+    portal_url: "https://www.data.go.kr/data/15059486/openapi.do"
+    base_service: "https://apis.data.go.kr/1471000/DURPrdlstInfoService03"
+    expected_update: realtime
+    required: true
+
+  - source_id: mfds_dur_ingredient
+    agency: "식품의약품안전처"
+    dataset: "의약품안전사용서비스(DUR)성분정보"
+    portal_url: "https://www.data.go.kr/data/15056780/openapi.do"
+    base_service: "https://apis.data.go.kr/1471000/DURIrdntInfoService03"
+    expected_update: realtime
+    required: true

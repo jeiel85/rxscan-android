@@ -1,0 +1,21 @@
+[project]
+name = "rxscan-data-builder"
+version = "0.0.1"
+description = "Bootstrap CLI for RxScan official-data build pipeline."
+requires-python = ">=3.11"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [
+  { name = "RxScan maintainers" }
+]
+dependencies = []
+
+[project.scripts]
+rxscan-data = "rxscan_data.cli:main"
+
+[tool.pyright]
+include = ["src", "tests"]
+pythonVersion = "3.11"
+typeCheckingMode = "strict"
+reportMissingTypeStubs = false
+

@@ -1,0 +1,115 @@
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.LibraryExtension
+import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.compose) apply false
+}
+
+val compileApi = 36
+val minimumApi = 26
+val targetApi = 36
+val appNamespace = "io.github.jeiel85.rxscan"
+val libsCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+val composeProjects = setOf(
+    ":app",
+    ":core:ui",
+    ":feature:home",
+)
+
+val androidLibraryProjects = subprojects
+    .map { it.path }
+    .filterNot { it == ":app" }
+    .toSet()
+
+subprojects {
+    dependencyLocking {
+        lockAllConfigurations()
+    }
+
+    tasks.withType<KotlinCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+            allWarningsAsErrors.set(true)
+        }
+    }
+}
+
+project(":app") {
+    apply(plugin = "com.android.application")
+    apply(plugin = "org.jetbrains.kotlin.plugin.compose")
+
+    extensions.configure<ApplicationExtension>("android") {
+        namespace = appNamespace
+        compileSdk = compileApi
+
+        defaultConfig {
+            applicationId = "$appNamespace.placeholder"
+            minSdk = minimumApi
+            targetSdk = targetApi
+            versionCode = 1
+            versionName = "0.0.1"
+        }
+
+        buildFeatures {
+            compose = true
+        }
+
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
+        }
+    }
+
+    dependencies {
+        add("implementation", project(":feature:home"))
+        add("implementation", project(":core:ui"))
+        add("implementation", libsCatalog.findLibrary("androidx-core-ktx").get())
+        add("implementation", libsCatalog.findLibrary("androidx-activity-compose").get())
+        add("implementation", platform(libsCatalog.findLibrary("androidx-compose-bom").get()))
+        add("implementation", libsCatalog.findLibrary("androidx-compose-ui").get())
+        add("implementation", libsCatalog.findLibrary("androidx-compose-material3").get())
+        add("debugImplementation", libsCatalog.findLibrary("androidx-compose-ui-tooling").get())
+        add("testImplementation", libsCatalog.findLibrary("junit").get())
+    }
+}
+
+configure(subprojects.filter { it.path in androidLibraryProjects }) {
+    apply(plugin = "com.android.library")
+    if (path in composeProjects) {
+        apply(plugin = "org.jetbrains.kotlin.plugin.compose")
+    }
+
+    extensions.configure<LibraryExtension>("android") {
+        namespace = "$appNamespace.${path.removePrefix(":").replace(':', '.')}"
+        compileSdk = compileApi
+
+        defaultConfig {
+            minSdk = minimumApi
+        }
+
+        buildFeatures {
+            compose = path in composeProjects
+        }
+
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
+        }
+    }
+
+    dependencies {
+        add("testImplementation", libsCatalog.findLibrary("junit").get())
+        if (path in composeProjects) {
+            add("implementation", platform(libsCatalog.findLibrary("androidx-compose-bom").get()))
+            add("implementation", libsCatalog.findLibrary("androidx-compose-ui").get())
+            add("implementation", libsCatalog.findLibrary("androidx-compose-material3").get())
+            add("implementation", libsCatalog.findLibrary("androidx-compose-ui-tooling-preview").get())
+        }
+    }
+}

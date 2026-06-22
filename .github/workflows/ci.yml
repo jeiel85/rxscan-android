@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    name: Android
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Ensure Gradle wrapper is executable
+        run: chmod +x gradlew
+      - name: Unit tests
+        run: ./gradlew testDebugUnitTest --no-daemon --stacktrace
+      - name: Android lint
+        run: ./gradlew lintDebug --no-daemon --stacktrace
+      - name: Debug assemble
+        run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
+
+  python-and-policy:
+    name: Python and policy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Python unit tests
+        run: python -m unittest discover -s tools/drug-data-builder/tests
+      - name: Python type check
+        run: npx --yes pyright tools/drug-data-builder
+      - name: Repository policy checks
+        run: python tools/ci/check_repository_policy.py

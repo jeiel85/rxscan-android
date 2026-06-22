@@ -1,0 +1,37 @@
+scope_version: "1.0.0"
+
+platform:
+  android:
+    min_sdk: 26
+    target_sdk_policy: "latest stable and current Google Play requirement at release time"
+
+supported:
+  languages:
+    - ko-KR
+  document_types:
+    - korean_pharmacy_dispensing_bag_printed
+  input:
+    - in_app_camera
+    - explicit_image_import
+  medicine_sources:
+    - domestic_mfds_registered_products
+  direction_patterns:
+    - fixed_daily_frequency
+    - morning_lunch_evening_bedtime
+    - before_with_after_meal
+    - meal_offset_minutes
+    - fixed_duration_days
+    - common_oral_units
+
+unsupported:
+  - handwritten_prescription
+  - pill_photo_only_identification
+  - unlabeled_single_dose_sachet
+  - foreign_medicine
+  - herbal_prescription
+  - health_supplement
+  - pediatric_dose_calculation
+  - renal_or_hepatic_adjustment
+  - dose_change_recommendation
+  - missed_dose_advice
+  - diagnosis_or_triage

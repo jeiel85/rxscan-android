@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">RxScan icon</title>
+  <desc id="desc">A privacy shield around a scanned document.</desc>
+  <rect width="128" height="128" rx="28" fill="#edf7f3"/>
+  <path d="M64 14 98 27v33c0 24-14 43-34 54-20-11-34-30-34-54V27z" fill="#0e6f63"/>
+  <path d="M47 38h34v52H47z" fill="#fff"/>
+  <path d="M55 52h18M55 63h18M55 74h12" fill="none" stroke="#14b8a6" stroke-width="5" stroke-linecap="round"/>
+  <path d="M35 40V29h12M93 40V29H81M35 88v11h12M93 88v11H81" fill="none" stroke="#0b3f39" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
