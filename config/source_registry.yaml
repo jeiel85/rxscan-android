@@ -1,36 +1,130 @@
 registry_version: "1.0.0"
 checked_date: "2026-06-22"
+data_go_kr_access:
+  requires_application: true
+  service_key_env: DATA_GO_KR_SERVICE_KEY
+  key_handling: "Use the decoded public-data portal ServiceKey value; the builder URL-encodes query parameters."
+  approval_note: "Development use is requested through data.go.kr 활용신청. Production use may require API-specific automatic or review approval."
+  secret_policy: "Do not commit, log, or write ServiceKey values to artifacts."
 
 sources:
   - source_id: mfds_drug_approval
     agency: "식품의약품안전처"
     dataset: "의약품 제품 허가정보"
     portal_url: "https://www.data.go.kr/data/15095677/openapi.do"
-    base_service: "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07"
+    host: "apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07"
     expected_update: realtime
     required: true
+    service_key_env: DATA_GO_KR_SERVICE_KEY
+    operations:
+      - operation_id: getDrugPrdtPrmsnInq07
+        path: /getDrugPrdtPrmsnInq07
+        summary: "의약품 제품 허가 목록"
+        required_fields: [ITEM_SEQ, ITEM_NAME, ENTP_NAME]
+      - operation_id: getDrugPrdtPrmsnDtlInq06
+        path: /getDrugPrdtPrmsnDtlInq06
+        summary: "의약품 제품 허가 상세정보"
+        required_fields: [ITEM_SEQ, ITEM_NAME, ENTP_NAME]
+      - operation_id: getDrugPrdtMcpnDtlInq07
+        path: /getDrugPrdtMcpnDtlInq07
+        summary: "의약품 제품 주성분 상세정보"
+        required_fields: [ITEM_SEQ, PRDUCT, MTRAL_NM]
 
   - source_id: mfds_easy_drug
     agency: "식품의약품안전처"
     dataset: "의약품개요정보(e약은요)"
     portal_url: "https://www.data.go.kr/data/15075057/openapi.do"
-    endpoint: "https://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList"
+    host: "apis.data.go.kr/1471000/DrbEasyDrugInfoService"
     expected_update: realtime
     limitation: "일반의약품 중 공급실적이 있는 제품 중심"
     required: false
+    service_key_env: DATA_GO_KR_SERVICE_KEY
+    operations:
+      - operation_id: getDrbEasyDrugList
+        path: /getDrbEasyDrugList
+        summary: "의약품개요정보 목록"
+        required_fields: [itemSeq, itemName, entpName]
 
   - source_id: mfds_dur_product
     agency: "식품의약품안전처"
     dataset: "의약품안전사용서비스(DUR)품목정보"
     portal_url: "https://www.data.go.kr/data/15059486/openapi.do"
-    base_service: "https://apis.data.go.kr/1471000/DURPrdlstInfoService03"
+    host: "apis.data.go.kr/1471000/DURPrdlstInfoService03"
     expected_update: realtime
     required: true
+    service_key_env: DATA_GO_KR_SERVICE_KEY
+    operations:
+      - operation_id: getUsjntTabooInfoList03
+        path: /getUsjntTabooInfoList03
+        summary: "병용금기 정보조회"
+        required_fields: [ITEM_SEQ, ITEM_NAME, TYPE_NAME]
+      - operation_id: getOdsnAtentInfoList03
+        path: /getOdsnAtentInfoList03
+        summary: "노인주의 정보조회"
+        required_fields: [ITEM_SEQ, ITEM_NAME, TYPE_NAME]
+      - operation_id: getDurPrdlstInfoList03
+        path: /getDurPrdlstInfoList03
+        summary: "DUR품목정보 조회"
+        required_fields: [ITEM_SEQ, ITEM_NAME, ENTP_NAME]
+      - operation_id: getSpcifyAgrdeTabooInfoList03
+        path: /getSpcifyAgrdeTabooInfoList03
+        summary: "특정연령대금기 정보조회"
+        required_fields: [ITEM_SEQ, ITEM_NAME, TYPE_NAME]
+      - operation_id: getCpctyAtentInfoList03
+        path: /getCpctyAtentInfoList03
+        summary: "용량주의 정보조회"
+        required_fields: [ITEM_SEQ, ITEM_NAME, TYPE_NAME]
+      - operation_id: getMdctnPdAtentInfoList03
+        path: /getMdctnPdAtentInfoList03
+        summary: "투여기간주의 정보조회"
+        required_fields: [ITEM_SEQ, ITEM_NAME, TYPE_NAME]
+      - operation_id: getEfcyDplctInfoList03
+        path: /getEfcyDplctInfoList03
+        summary: "효능군중복 정보조회"
+        required_fields: [ITEM_SEQ, ITEM_NAME, TYPE_NAME]
+      - operation_id: getSeobangjeongPartitnAtentInfoList03
+        path: /getSeobangjeongPartitnAtentInfoList03
+        summary: "서방정분할주의 정보조회"
+        required_fields: [ITEM_SEQ, ITEM_NAME, TYPE_NAME]
+      - operation_id: getPwnmTabooInfoList03
+        path: /getPwnmTabooInfoList03
+        summary: "임부금기 정보조회"
+        required_fields: [ITEM_SEQ, ITEM_NAME, TYPE_NAME]
 
   - source_id: mfds_dur_ingredient
     agency: "식품의약품안전처"
     dataset: "의약품안전사용서비스(DUR)성분정보"
     portal_url: "https://www.data.go.kr/data/15056780/openapi.do"
-    base_service: "https://apis.data.go.kr/1471000/DURIrdntInfoService03"
+    host: "apis.data.go.kr/1471000/DURIrdntInfoService03"
     expected_update: realtime
     required: true
+    service_key_env: DATA_GO_KR_SERVICE_KEY
+    operations:
+      - operation_id: getUsjntTabooInfoList02
+        path: /getUsjntTabooInfoList02
+        summary: "병용금기 정보조회"
+        required_fields: [INGR_CODE, TYPE_NAME]
+      - operation_id: getPwnmTabooInfoList02
+        path: /getPwnmTabooInfoList02
+        summary: "임부금기 정보조회"
+        required_fields: [INGR_CODE, TYPE_NAME]
+      - operation_id: getCpctyAtentInfoList02
+        path: /getCpctyAtentInfoList02
+        summary: "용량주의 정보조회"
+        required_fields: [INGR_CODE, TYPE_NAME]
+      - operation_id: getMdctnPdAtentInfoList02
+        path: /getMdctnPdAtentInfoList02
+        summary: "투여기간주의 정보조회"
+        required_fields: [INGR_CODE, TYPE_NAME]
+      - operation_id: getOdsnAtentInfoList02
+        path: /getOdsnAtentInfoList02
+        summary: "노인주의 정보조회"
+        required_fields: [INGR_CODE, TYPE_NAME]
+      - operation_id: getSpcifyAgrdeTabooInfoList02
+        path: /getSpcifyAgrdeTabooInfoList02
+        summary: "특정연령대금기 정보조회"
+        required_fields: [INGR_CODE, TYPE_NAME]
+      - operation_id: getEfcyDplctInfoList02
+        path: /getEfcyDplctInfoList02
+        summary: "효능군중복 정보조회"
+        required_fields: [INGR_CODE, TYPE_NAME]

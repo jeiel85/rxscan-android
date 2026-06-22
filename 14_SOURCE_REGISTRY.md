@@ -4,12 +4,24 @@ Checked: 2026-06-22 (Asia/Seoul)
 
 This file records the initial source plan. API schemas, usage terms, traffic limits, and links must be re-verified during implementation and before every public release.
 
+## Public-data portal access
+
+- MFDS OpenAPI live fetches require a data.go.kr utilization request (`활용신청`) and issued `ServiceKey`.
+- The local builder reads the decoded key only from `DATA_GO_KR_SERVICE_KEY`.
+- Service keys must not be committed, logged, or written into snapshots, reports, Android assets, or CI output.
+- CI uses synthetic fixtures only until a separate protected-secret live-smoke workflow is explicitly designed.
+- See `docs/MFDS_DATA_ACCESS.md` for the current access plan and command examples.
+
 ## MFDS medicine product approval information
 
 - Agency: Ministry of Food and Drug Safety (식품의약품안전처)
 - Dataset: 의약품 제품 허가정보
 - Portal: https://www.data.go.kr/data/15095677/openapi.do
-- Base service shown by portal: `apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07`
+- Service host shown by portal: `apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07`
+- Initial operations:
+  - `getDrugPrdtPrmsnInq07`
+  - `getDrugPrdtPrmsnDtlInq06`
+  - `getDrugPrdtMcpnDtlInq07`
 - Intended use: product identity, ingredient, manufacturer, packaging, storage, appearance, approval details
 - Update description: real-time
 - Portal usage scope at check date: no restriction shown
@@ -20,7 +32,8 @@ This file records the initial source plan. API schemas, usage terms, traffic lim
 - Agency: MFDS
 - Dataset: 의약품개요정보(e약은요)
 - Portal: https://www.data.go.kr/data/15075057/openapi.do
-- Service endpoint shown by portal: `apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList`
+- Service host shown by portal: `apis.data.go.kr/1471000/DrbEasyDrugInfoService`
+- Initial operation: `getDrbEasyDrugList`
 - Intended use: efficacy, use, warning, cautions, interaction, adverse reaction, storage
 - Important limitation: portal describes coverage as general medicines with supply records
 - Primary join key: `itemSeq`
@@ -40,7 +53,17 @@ This file records the initial source plan. API schemas, usage terms, traffic lim
 - Agency: MFDS
 - Dataset: 의약품안전사용서비스(DUR)품목정보
 - Portal: https://www.data.go.kr/data/15059486/openapi.do
-- Base service shown by portal: `apis.data.go.kr/1471000/DURPrdlstInfoService03`
+- Service host shown by portal: `apis.data.go.kr/1471000/DURPrdlstInfoService03`
+- Initial operations:
+  - `getUsjntTabooInfoList03`
+  - `getOdsnAtentInfoList03`
+  - `getDurPrdlstInfoList03`
+  - `getSpcifyAgrdeTabooInfoList03`
+  - `getCpctyAtentInfoList03`
+  - `getMdctnPdAtentInfoList03`
+  - `getEfcyDplctInfoList03`
+  - `getSeobangjeongPartitnAtentInfoList03`
+  - `getPwnmTabooInfoList03`
 - Intended use: contraindicated combinations, age/pregnancy cautions, dose/duration cautions, elderly cautions, therapeutic duplication, extended-release split cautions
 - Update description: real-time
 - Portal usage scope at check date: no restriction shown
@@ -50,7 +73,15 @@ This file records the initial source plan. API schemas, usage terms, traffic lim
 - Agency: MFDS
 - Dataset: 의약품안전사용서비스(DUR)성분정보
 - Portal: https://www.data.go.kr/data/15056780/openapi.do
-- Base service shown by portal: `apis.data.go.kr/1471000/DURIrdntInfoService03`
+- Service host shown by portal: `apis.data.go.kr/1471000/DURIrdntInfoService03`
+- Initial operations:
+  - `getUsjntTabooInfoList02`
+  - `getPwnmTabooInfoList02`
+  - `getCpctyAtentInfoList02`
+  - `getMdctnPdAtentInfoList02`
+  - `getOdsnAtentInfoList02`
+  - `getSpcifyAgrdeTabooInfoList02`
+  - `getEfcyDplctInfoList02`
 - Intended use: ingredient-level DUR relationships and notices
 
 ## Android on-device OCR

@@ -8,7 +8,7 @@ Privacy-first Android engineering project for local Korean dispensing-bag OCR an
 
 ## Status
 
-Goal 00 bootstrap is in progress. The app currently launches to a non-medical placeholder screen. It does not contain OCR, medicine matching, public database updates, accounts, analytics, ads, or a patient-data backend.
+Goal 00 bootstrap is complete and Goal 01 data-builder work has started. The app currently launches to a non-medical placeholder screen. It does not contain OCR, medicine matching, signed SQLite publication, accounts, analytics, ads, or a patient-data backend.
 
 The working product name and package ID are placeholders until final branding is selected.
 
@@ -48,13 +48,24 @@ Implemented in this bootstrap:
 - GitHub Pages landing page and privacy draft;
 - synthetic-only test data policy.
 
+## Goal 01 data builder
+
+Initial Goal 01 work adds:
+
+- MFDS/data.go.kr access documentation and source operation registry;
+- ServiceKey-only live fetch path through `DATA_GO_KR_SERVICE_KEY`;
+- paged fetcher with timeout retries, page continuity checks, schema checks, and redacted request URLs;
+- deterministic fixture build path for CI;
+- tests for timeout, malformed JSON/XML, required-field drift, duplicate page, Korean UTF-8, deterministic normalization, and secret redaction.
+
+Official API access requires data.go.kr `활용신청`. See [docs/MFDS_DATA_ACCESS.md](docs/MFDS_DATA_ACCESS.md).
+
 Not implemented yet:
 
 - CameraX capture;
 - on-device Korean OCR;
-- public data fetching;
 - signed SQLite publication;
-- parser, matcher, DUR, review UI, or encrypted history.
+- parser, matcher, DUR evaluation, review UI, or encrypted history.
 
 ## Local verification
 
@@ -64,6 +75,9 @@ Not implemented yet:
 python -m unittest discover -s tools/drug-data-builder/tests
 npx --yes pyright tools/drug-data-builder
 python tools/ci/check_repository_policy.py
+$env:PYTHONPATH = "tools/drug-data-builder/src"
+python -m rxscan_data list-sources
+python -m rxscan_data build-fixture --source mfds_easy_drug --operation getDrbEasyDrugList --fixture tools/drug-data-builder/fixtures/synthetic/mfds_easy_drug_minimal.json --out tools/drug-data-builder/out/fixture-smoke
 ```
 
 ## Design source
@@ -83,4 +97,3 @@ The original bundle README is preserved at [docs/design/README.design-bundle.md]
 ## License
 
 License selection is pending. Do not assume redistribution rights for official source data until each source's terms are re-verified and documented.
-
