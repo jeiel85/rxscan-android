@@ -1,0 +1,27 @@
+{
+  "_comment": "Production release gates (09_TEST_QUALITY.md §5, checklists/RELEASE_CHECKLIST.md). 'pass' = satisfied and CI-verifiable now; 'blocked' = launch blocker pending real-world activity (corpus, devices, audits). tools/ci/release_gate.py blocks release while any mandatory gate is not 'pass'.",
+  "gates": [
+    {"id": "hard_contradiction_invariants", "name": "Hard-contradiction property tests pass", "category": "matching", "mandatory": true, "status": "pass", "note": "engine:matcher DrugMatcherTest property invariants"},
+    {"id": "no_wrong_high_confidence_synthetic", "name": "No wrong high-confidence in synthetic holdout", "category": "matching", "mandatory": true, "status": "pass", "note": "engine:matcher MatcherHoldoutBenchmarkTest"},
+    {"id": "holdout_3000_real", "name": "Zero wrong high-confidence in >=3000-line independent real holdout (>=500 products, >=30 templates)", "category": "matching", "mandatory": true, "status": "blocked", "note": "needs consented/synthetic-at-scale corpus; see docs/CORPUS_ANNOTATION.md"},
+    {"id": "direction_exact_match", "name": "Direction grammar exact-match gate", "category": "parser", "mandatory": true, "status": "pass", "note": "engine:parser DirectionParserTest; real-scan exact-match >=99.5% pending corpus"},
+    {"id": "privacy_unit", "name": "Key/redaction/delete/temp-lifecycle unit tests pass", "category": "privacy", "mandatory": true, "status": "pass", "note": "core:security, core:logging, data:privatedb, feature:scan tests"},
+    {"id": "manifest_signature_rollback", "name": "Manifest signature + tamper + rollback/revocation drill", "category": "data", "mandatory": true, "status": "pass", "note": "tools/drug-data-builder tests; docs/ROLLBACK_AND_REVOCATION.md"},
+    {"id": "repository_policy", "name": "Repository policy check (no analytics/ads, no INTERNET)", "category": "privacy", "mandatory": true, "status": "pass", "note": "tools/ci/check_repository_policy.py"},
+    {"id": "fixed_medical_copy", "name": "Fixed medical copy has no banned wording", "category": "medical", "mandatory": true, "status": "pass", "note": "DurWordingTest, ReviewCopyTest, DetailCopyTest"},
+    {"id": "source_separation", "name": "Photographed direction separated from official info", "category": "medical", "mandatory": true, "status": "pass", "note": "core:model types + ReviewScreen/DrugDetailScreen"},
+    {"id": "network_no_sensitive", "name": "Network capture has no prescription/OCR data", "category": "privacy", "mandatory": true, "status": "blocked", "note": "needs device MITM capture test (instrumentation)"},
+    {"id": "backup_transfer_leak", "name": "Backup/device-transfer leakage test passes", "category": "privacy", "mandatory": true, "status": "blocked", "note": "config in place (allowBackup=false, exclusions); needs device test"},
+    {"id": "ui_instrumentation", "name": "UI: review-not-bypassable, TalkBack, large font, rotation, stale banners, delete-all", "category": "ui", "mandatory": true, "status": "blocked", "note": "logic unit-tested; full instrumentation needs emulator/device"},
+    {"id": "ocr_offline_device", "name": "Airplane-mode first-run OCR on device", "category": "ocr", "mandatory": true, "status": "blocked", "note": "ML Kit bundled model; needs device verification"},
+    {"id": "device_matrix", "name": "Device/OEM test matrix executed", "category": "reliability", "mandatory": true, "status": "blocked", "note": "see docs/DEVICE_TEST_MATRIX.md"},
+    {"id": "pentest", "name": "Penetration test findings resolved or accepted", "category": "security", "mandatory": true, "status": "blocked", "note": "external activity"},
+    {"id": "sbom_license", "name": "SBOM, dependency, license, vulnerability review", "category": "security", "mandatory": true, "status": "blocked", "note": "external activity"},
+    {"id": "pharmacist_signoff", "name": "Pharmacist sign-off on fixed medical copy", "category": "medical", "mandatory": true, "status": "blocked", "note": "see docs/PHARMACIST_SIGNOFF_PACKAGE.md"},
+    {"id": "regulatory_review", "name": "Regulatory applicability review completed", "category": "medical", "mandatory": true, "status": "blocked", "note": "see docs/REGULATORY_REVIEW_PACKAGE.md"},
+    {"id": "privacy_policy_published", "name": "Privacy policy published and reviewed", "category": "play", "mandatory": true, "status": "blocked", "note": "draft in docs/PRIVACY_POLICY_DRAFT.md"},
+    {"id": "data_safety_form", "name": "Play Data safety form matches build behavior", "category": "play", "mandatory": true, "status": "blocked", "note": "draft in docs/PLAY_DATA_SAFETY.md"},
+    {"id": "staged_rollout", "name": "Staged rollout + incident owner configured", "category": "release", "mandatory": true, "status": "blocked", "note": "see docs/INCIDENT_AND_ROLLOUT_RUNBOOK.md"},
+    {"id": "crash_free_beta", "name": "Crash-free internal beta target measured (no health payloads)", "category": "reliability", "mandatory": true, "status": "blocked", "note": "needs internal beta"}
+  ]
+}

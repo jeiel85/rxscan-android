@@ -49,3 +49,5 @@ jobs:
         run: npx --yes pyright tools/drug-data-builder
       - name: Repository policy checks
         run: python tools/ci/check_repository_policy.py
+      - name: Release-gate logic selftest
+        run: python tools/ci/release_gate.py --selftest
