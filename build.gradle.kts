@@ -65,6 +65,7 @@ project(":app") {
             targetSdk = targetApi
             versionCode = 2
             versionName = "0.1.0"
+            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
 
         if (keystorePropertiesFile.exists()) {
@@ -111,6 +112,11 @@ project(":app") {
         add("implementation", libsCatalog.findLibrary("androidx-compose-material3").get())
         add("debugImplementation", libsCatalog.findLibrary("androidx-compose-ui-tooling").get())
         add("testImplementation", libsCatalog.findLibrary("junit").get())
+        add("androidTestImplementation", platform(libsCatalog.findLibrary("androidx-compose-bom").get()))
+        add("androidTestImplementation", libsCatalog.findLibrary("androidx-test-ext-junit").get())
+        add("androidTestImplementation", libsCatalog.findLibrary("androidx-test-rules").get())
+        add("androidTestImplementation", libsCatalog.findLibrary("androidx-compose-ui-test-junit4").get())
+        add("debugImplementation", libsCatalog.findLibrary("androidx-compose-ui-test-manifest").get())
     }
 }
 
