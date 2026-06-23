@@ -119,6 +119,16 @@ configure(subprojects.filter { it.path in androidLibraryProjects }) {
                 add("implementation", libsCatalog.findLibrary("mlkit-text-korean").get())
                 add("testImplementation", libsCatalog.findLibrary("kotlinx-coroutines-test").get())
             }
+            ":engine:parser" -> {
+                add("implementation", project(":core:model"))
+                add("implementation", project(":engine:ocr"))
+            }
+            ":engine:matcher" -> {
+                add("implementation", project(":core:model"))
+            }
+            ":data:publicdb" -> {
+                add("implementation", project(":core:model"))
+            }
             ":feature:scan" -> {
                 add("implementation", project(":core:model"))
                 add("implementation", project(":core:ui"))
