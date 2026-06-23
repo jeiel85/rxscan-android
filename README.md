@@ -2,15 +2,21 @@
 
 Privacy-first Android engineering project for local Korean dispensing-bag OCR and official public medicine-data lookup.
 
-[Landing page](https://jeiel85.github.io/rxscan-android/) · [Privacy draft](https://jeiel85.github.io/rxscan-android/privacy.html) · [Engineering bootstrap](docs/ENGINEERING_BOOTSTRAP.md)
+[Landing page](https://jeiel85.github.io/rxscan-android/) · [개인정보 처리방침 / Privacy Policy](https://jeiel85.github.io/rxscan-android/privacy.html) · [Download test build](https://github.com/jeiel85/rxscan-android/releases/latest) · [Engineering bootstrap](docs/ENGINEERING_BOOTSTRAP.md)
 
 ![RxScan landing hero](docs/assets/landing-hero.png)
 
 ## Status
 
-Goal 00 bootstrap is complete and Goal 01 data-builder work has started. The app currently launches to a non-medical placeholder screen. It does not contain OCR, medicine matching, signed SQLite publication, accounts, analytics, ads, or a patient-data backend.
+All nine implementation goals (00–08) are complete. The app does on-device Korean dispensing-bag OCR (bundled ML Kit), deterministic fail-closed medicine matching, a mandatory review flow, official-source display, local DUR safety wording, and encrypted private storage, backed by a signed, reproducible public drug database built by the Python data-builder. No accounts, analytics, ads, or patient-data backend.
 
-The working product name and package ID are placeholders until final branding is selected.
+**This is an engineering preview / internal test build — not cleared for production or clinical use.** Pharmacist sign-off, regulatory review, a real validation holdout, and a security pentest are open launch blockers tracked in `config/release_gates.json`; the release gate blocks production automatically.
+
+Package ID `io.github.jeiel85.rxscan`, current build v0.1.0 (versionCode 2).
+
+### Download / test
+
+Latest test build (signed APK, Android 8.0+): [Releases](https://github.com/jeiel85/rxscan-android/releases/latest). Use synthetic data only — do not photograph a real prescription.
 
 ## Safety boundaries
 
@@ -35,37 +41,17 @@ schemas/                       Canonical public data and scan result schemas
 prompts/                       Goal-by-goal implementation prompts
 ```
 
-## Goal 00 scope
+## Implemented (Goals 00–08)
 
-Implemented in this bootstrap:
+- **Data builder (Python)**: MFDS source registry + paged fetcher (timeout/retry, schema/page checks, redacted URLs); reproducible signed public SQLite DB with an Ed25519 manifest and independent verification; rollback/revocation design. Official API access requires data.go.kr `활용신청` — see [docs/MFDS_DATA_ACCESS.md](docs/MFDS_DATA_ACCESS.md).
+- **Scan**: CameraX preview/capture, document-boundary overlay, image-quality gate, bundled offline Korean OCR, perspective transform, temp-file lifecycle.
+- **Parser / matcher**: deterministic row clustering, field extraction, and direction grammar; fail-closed matcher with a hard-contradiction engine and policy scoring (VERIFIED / HIGH / AMBIGUOUS / UNRESOLVED), property-tested.
+- **Review / source UI**: mandatory review (no bypass), photographed direction vs official information separation, source/date/version visibility, non-color confidence semantics.
+- **DUR**: confirmed-medicine-only local evaluation with fixed safety wording (never stop/change/double), stale-data handling.
+- **Security**: Keystore-wrapped private-DB key (fail-closed), redacted diagnostics, delete-all / key-invalidation, network/backup hardening, FLAG_SECURE.
+- **Validation / release**: synthetic holdout benchmark, automatic release-gate blocking, and the compliance document set under `docs/`.
 
-- modular Android Gradle project with Compose placeholder home;
-- min SDK 26, compile/target SDK 36;
-- no Internet permission;
-- dependency locking configuration;
-- typed Python data-builder package with manifest contract tests;
-- CI for Android, Python, type checking, and repository policy checks;
-- GitHub Pages landing page and privacy draft;
-- synthetic-only test data policy.
-
-## Goal 01 data builder
-
-Initial Goal 01 work adds:
-
-- MFDS/data.go.kr access documentation and source operation registry;
-- ServiceKey-only live fetch path through `DATA_GO_KR_SERVICE_KEY`;
-- paged fetcher with timeout retries, page continuity checks, schema checks, and redacted request URLs;
-- deterministic fixture build path for CI;
-- tests for timeout, malformed JSON/XML, required-field drift, duplicate page, Korean UTF-8, deterministic normalization, and secret redaction.
-
-Official API access requires data.go.kr `활용신청`. See [docs/MFDS_DATA_ACCESS.md](docs/MFDS_DATA_ACCESS.md).
-
-Not implemented yet:
-
-- CameraX capture;
-- on-device Korean OCR;
-- signed SQLite publication;
-- parser, matcher, DUR evaluation, review UI, or encrypted history.
+Safety-critical logic is pure Kotlin and JVM-tested; CameraX/ML Kit/Keystore/Compose are device-only wrappers. Device-only acceptance (airplane-mode OCR, TalkBack, on-device backup/MITM, real holdout) is implemented but verified outside the JVM CI.
 
 ## Local verification
 

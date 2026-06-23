@@ -234,7 +234,8 @@
             mandatory user review, and official public medicine-data lookup.
           </p>
           <div class="actions" aria-label="Primary links">
-            <a class="button primary" href="https://github.com/jeiel85/rxscan-android">GitHub</a>
+            <a class="button primary" href="https://github.com/jeiel85/rxscan-android/releases/latest">Download test build</a>
+            <a class="button secondary" href="https://github.com/jeiel85/rxscan-android">GitHub</a>
             <a class="button secondary" href="privacy.html">개인정보 처리방침 · Privacy</a>
           </div>
         </div>
@@ -286,20 +287,20 @@
 
       <section class="band white">
         <div class="section-inner">
-          <p class="status">Current status: Goal 00 bootstrap</p>
-          <h2 class="section-heading">The repository now contains the implementation skeleton.</h2>
+          <p class="status">Current status: Goals 00–08 complete · v0.1.0 test build</p>
+          <h2 class="section-heading">On-device scan, fail-closed matching, mandatory review, and signed official data.</h2>
           <div class="grid">
             <article class="panel">
-              <h3>Android</h3>
-              <p>Modular Kotlin and Compose project with a non-medical placeholder home screen.</p>
+              <h3>Android app</h3>
+              <p>CameraX scan with quality gate and bundled offline Korean OCR, deterministic fail-closed matcher, mandatory review, official-source display, local DUR wording, and encrypted private storage.</p>
             </article>
             <article class="panel">
               <h3>Data builder</h3>
-              <p>Typed Python package and contract tests for the signed public-data manifest.</p>
+              <p>Reproducible, Ed25519-signed public drug database with independent verification and a rollback/revocation design.</p>
             </article>
             <article class="panel">
-              <h3>Documentation</h3>
-              <p>Design documents, security policy, dependency policy, and synthetic-only test data policy.</p>
+              <h3>Release readiness</h3>
+              <p>An engineering preview, not cleared for production: pharmacist, regulatory, real-holdout, and pentest gates remain open and block production automatically.</p>
             </article>
           </div>
         </div>
