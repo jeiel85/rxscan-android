@@ -21,6 +21,8 @@ val composeProjects = setOf(
     ":core:ui",
     ":feature:home",
     ":feature:scan",
+    ":feature:review",
+    ":feature:drugdetail",
 )
 
 val androidLibraryProjects = subprojects
@@ -70,6 +72,8 @@ project(":app") {
     dependencies {
         add("implementation", project(":feature:home"))
         add("implementation", project(":feature:scan"))
+        add("implementation", project(":feature:review"))
+        add("implementation", project(":core:model"))
         add("implementation", project(":core:ui"))
         add("implementation", libsCatalog.findLibrary("androidx-core-ktx").get())
         add("implementation", libsCatalog.findLibrary("androidx-activity-compose").get())
@@ -128,6 +132,16 @@ configure(subprojects.filter { it.path in androidLibraryProjects }) {
             }
             ":data:publicdb" -> {
                 add("implementation", project(":core:model"))
+            }
+            ":feature:drugdetail" -> {
+                add("implementation", project(":core:model"))
+                add("implementation", project(":core:ui"))
+            }
+            ":feature:review" -> {
+                add("implementation", project(":core:model"))
+                add("implementation", project(":core:ui"))
+                add("implementation", project(":feature:drugdetail"))
+                add("implementation", libsCatalog.findLibrary("androidx-lifecycle-viewmodel-compose").get())
             }
             ":feature:scan" -> {
                 add("implementation", project(":core:model"))

@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 fun HomeRoute(
     modifier: Modifier = Modifier,
     onStartScan: () -> Unit = {},
+    onPreviewReview: () -> Unit = {},
 ) {
     Surface(
         modifier = modifier.fillMaxSize(),
@@ -43,6 +44,9 @@ fun HomeRoute(
             )
             Button(onClick = onStartScan, modifier = Modifier.fillMaxWidth()) {
                 Text("약봉지 촬영")
+            }
+            Button(onClick = onPreviewReview, modifier = Modifier.fillMaxWidth()) {
+                Text("검토 화면 미리보기 (합성 데이터)")
             }
         }
     }
