@@ -6,6 +6,10 @@ import io.github.jeiel85.rxscan.core.model.DosageForm
 import io.github.jeiel85.rxscan.core.model.DrugCandidateScore
 import io.github.jeiel85.rxscan.core.model.DrugMatchResult
 import io.github.jeiel85.rxscan.core.model.DrugRecord
+import io.github.jeiel85.rxscan.core.model.DurEvaluation
+import io.github.jeiel85.rxscan.core.model.DurFinding
+import io.github.jeiel85.rxscan.core.model.DurRuleType
+import io.github.jeiel85.rxscan.core.model.DurStatus
 import io.github.jeiel85.rxscan.core.model.MatchStatus
 import io.github.jeiel85.rxscan.core.model.MealRelation
 import io.github.jeiel85.rxscan.core.model.MedicationLineReview
@@ -72,6 +76,29 @@ internal object SampleReview {
                 photographedDirection = DirectionParse(rawText = "1일 2회", status = DirectionStatus.PARSED, frequencyPerDay = 2),
             ),
         ),
+    )
+
+    /** Synthetic DUR result for the preview, shown after the synthetic review finalizes. */
+    fun durEvaluation(): DurEvaluation = DurEvaluation(
+        status = DurStatus.INSUFFICIENT_DATA,
+        findings = listOf(
+            DurFinding(
+                type = DurRuleType.CO_ADMINISTRATION_CONTRAINDICATION,
+                ruleId = "SYNTH-RULE-1",
+                noticeDate = "2026-01-01",
+                sourceId = "mfds_dur_ingredient",
+                agency = "식품의약품안전처",
+                involvedItemCodes = listOf("SYNTH-0001", "SYNTH-0003"),
+                involvedProductNames = listOf("합성테스트정", "합성병용약"),
+                publicDbVersion = "20260623-1",
+            ),
+        ),
+        evaluatedItemCodes = listOf("SYNTH-0001"),
+        unresolvedItemCodes = listOf("line-2"),
+        currentClaimAllowed = true,
+        publicDbVersion = "20260623-1",
+        policyVersion = "1.0.0",
+        notEvaluatedTypes = DurRuleType.entries.filterNot { it.pairwise },
     )
 
     private fun candidate(itemCode: String, name: String, score: Double) = DrugCandidateScore(

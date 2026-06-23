@@ -1,29 +1,27 @@
 package io.github.jeiel85.rxscan
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import io.github.jeiel85.rxscan.core.model.Freshness
 import io.github.jeiel85.rxscan.core.model.ReviewSession
 import io.github.jeiel85.rxscan.core.ui.RxScanTheme
 import io.github.jeiel85.rxscan.feature.home.HomeRoute
 import io.github.jeiel85.rxscan.feature.review.ReviewScreen
+import io.github.jeiel85.rxscan.feature.safety.SafetyScreen
 import io.github.jeiel85.rxscan.feature.scan.ScanRoute
 
-private enum class Screen { HOME, SCAN, REVIEW }
+private enum class Screen { HOME, SCAN, REVIEW, SAFETY }
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RxScanTheme {
-                val context = LocalContext.current
                 var screen by remember { mutableStateOf(Screen.HOME) }
                 var review by remember { mutableStateOf<ReviewSession?>(null) }
 
@@ -52,13 +50,18 @@ class MainActivity : ComponentActivity() {
                                 onUnresolved = { lineId -> review = session.updateLine(lineId) { it.markUnresolved() } },
                                 onFinalize = {
                                     session.finalize()
-                                    Toast.makeText(context, "검토가 완료되었습니다", Toast.LENGTH_SHORT).show()
-                                    review = null
-                                    screen = Screen.HOME
+                                    screen = Screen.SAFETY
                                 },
                             )
                         }
                     }
+                    Screen.SAFETY -> SafetyScreen(
+                        evaluation = SampleReview.durEvaluation(),
+                        onBack = {
+                            review = null
+                            screen = Screen.HOME
+                        },
+                    )
                 }
             }
         }

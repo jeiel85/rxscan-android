@@ -23,6 +23,7 @@ val composeProjects = setOf(
     ":feature:scan",
     ":feature:review",
     ":feature:drugdetail",
+    ":feature:safety",
 )
 
 val androidLibraryProjects = subprojects
@@ -73,6 +74,7 @@ project(":app") {
         add("implementation", project(":feature:home"))
         add("implementation", project(":feature:scan"))
         add("implementation", project(":feature:review"))
+        add("implementation", project(":feature:safety"))
         add("implementation", project(":core:model"))
         add("implementation", project(":core:ui"))
         add("implementation", libsCatalog.findLibrary("androidx-core-ktx").get())
@@ -133,7 +135,14 @@ configure(subprojects.filter { it.path in androidLibraryProjects }) {
             ":data:publicdb" -> {
                 add("implementation", project(":core:model"))
             }
+            ":engine:dur" -> {
+                add("implementation", project(":core:model"))
+            }
             ":feature:drugdetail" -> {
+                add("implementation", project(":core:model"))
+                add("implementation", project(":core:ui"))
+            }
+            ":feature:safety" -> {
                 add("implementation", project(":core:model"))
                 add("implementation", project(":core:ui"))
             }
