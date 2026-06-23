@@ -3,7 +3,9 @@ package io.github.jeiel85.rxscan.feature.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -13,7 +15,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HomeRoute(modifier: Modifier = Modifier) {
+fun HomeRoute(
+    modifier: Modifier = Modifier,
+    onStartScan: () -> Unit = {},
+) {
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background,
@@ -36,6 +41,9 @@ fun HomeRoute(modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.secondary,
             )
+            Button(onClick = onStartScan, modifier = Modifier.fillMaxWidth()) {
+                Text("약봉지 촬영")
+            }
         }
     }
 }

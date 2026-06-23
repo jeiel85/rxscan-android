@@ -20,6 +20,7 @@ val composeProjects = setOf(
     ":app",
     ":core:ui",
     ":feature:home",
+    ":feature:scan",
 )
 
 val androidLibraryProjects = subprojects
@@ -68,6 +69,7 @@ project(":app") {
 
     dependencies {
         add("implementation", project(":feature:home"))
+        add("implementation", project(":feature:scan"))
         add("implementation", project(":core:ui"))
         add("implementation", libsCatalog.findLibrary("androidx-core-ktx").get())
         add("implementation", libsCatalog.findLibrary("androidx-activity-compose").get())
@@ -105,6 +107,37 @@ configure(subprojects.filter { it.path in androidLibraryProjects }) {
 
     dependencies {
         add("testImplementation", libsCatalog.findLibrary("junit").get())
+
+        when (path) {
+            ":engine:imagequality", ":engine:document" -> {
+                add("implementation", project(":core:model"))
+            }
+            ":engine:ocr" -> {
+                add("implementation", project(":core:model"))
+                add("implementation", libsCatalog.findLibrary("kotlinx-coroutines-core").get())
+                add("implementation", libsCatalog.findLibrary("kotlinx-coroutines-android").get())
+                add("implementation", libsCatalog.findLibrary("mlkit-text-korean").get())
+                add("testImplementation", libsCatalog.findLibrary("kotlinx-coroutines-test").get())
+            }
+            ":feature:scan" -> {
+                add("implementation", project(":core:model"))
+                add("implementation", project(":core:ui"))
+                add("implementation", project(":engine:imagequality"))
+                add("implementation", project(":engine:document"))
+                add("implementation", project(":engine:ocr"))
+                add("implementation", libsCatalog.findLibrary("androidx-core-ktx").get())
+                add("implementation", libsCatalog.findLibrary("androidx-activity-compose").get())
+                add("implementation", libsCatalog.findLibrary("androidx-lifecycle-runtime-compose").get())
+                add("implementation", libsCatalog.findLibrary("androidx-lifecycle-viewmodel-compose").get())
+                add("implementation", libsCatalog.findLibrary("kotlinx-coroutines-android").get())
+                add("implementation", libsCatalog.findLibrary("androidx-camera-core").get())
+                add("implementation", libsCatalog.findLibrary("androidx-camera-camera2").get())
+                add("implementation", libsCatalog.findLibrary("androidx-camera-lifecycle").get())
+                add("implementation", libsCatalog.findLibrary("androidx-camera-view").get())
+                add("implementation", libsCatalog.findLibrary("mlkit-text-korean").get())
+            }
+        }
+
         if (path in composeProjects) {
             add("implementation", platform(libsCatalog.findLibrary("androidx-compose-bom").get()))
             add("implementation", libsCatalog.findLibrary("androidx-compose-ui").get())
