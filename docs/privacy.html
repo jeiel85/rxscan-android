@@ -3,77 +3,196 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>RxScan Privacy Draft</title>
+    <title>RxScan 개인정보 처리방침 · Privacy Policy</title>
+    <meta name="description" content="RxScan 개인정보 처리방침 — 온디바이스 처리, 업로드 없음, 옵트인 암호화 저장." />
     <link rel="icon" href="assets/rxscan-icon.svg" type="image/svg+xml" />
     <style>
       body {
         margin: 0;
-        font-family:
-          Inter,
-          ui-sans-serif,
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          sans-serif;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", "Malgun Gothic", sans-serif;
         color: #17211e;
         background: #f8faf9;
       }
-
       main {
         width: min(880px, calc(100% - 32px));
         margin: 0 auto;
-        padding: 64px 0;
+        padding: 56px 0 80px;
       }
-
       h1 {
-        margin: 0 0 16px;
-        font-size: clamp(2.4rem, 6vw, 4rem);
-        letter-spacing: 0;
+        margin: 8px 0 4px;
+        font-size: clamp(2rem, 5vw, 3rem);
       }
-
       h2 {
-        margin-top: 36px;
+        margin-top: 40px;
+        border-bottom: 1px solid #d8e3df;
+        padding-bottom: 6px;
       }
-
       p,
       li {
         line-height: 1.75;
         color: #50645f;
       }
-
       a {
         color: #0e6f63;
         font-weight: 700;
+      }
+      .meta {
+        color: #50645f;
+        font-size: 0.95rem;
+      }
+      .note {
+        background: #edf7f3;
+        border: 1px solid #d8e3df;
+        border-radius: 10px;
+        padding: 12px 16px;
+      }
+      .lang {
+        margin-top: 64px;
+        border-top: 2px solid #0e6f63;
+        padding-top: 8px;
       }
     </style>
   </head>
   <body>
     <main>
-      <a href="index.html">RxScan Android</a>
-      <h1>Privacy Draft</h1>
+      <a href="index.html">← RxScan Android</a>
+      <h1>개인정보 처리방침</h1>
+      <p class="meta">최종 업데이트: 2026-06-23 · 적용 대상: RxScan Android 앱</p>
+
       <p>
-        This page describes the intended privacy posture for the engineering
-        preview. It must be updated to match the actual released build before
-        any public app release.
+        RxScan은 약봉지·처방 사진을 <strong>기기 안에서만</strong> 분석해 약 이름과 복용법을
+        인식하고 공식 의약품 정보를 찾아주는 정보 도우미입니다. 진단이나 처방을 대신하지
+        않습니다. 본 방침은 앱이 개인정보를 어떻게 다루는지 설명합니다.
       </p>
 
-      <h2>Current bootstrap build</h2>
+      <h2>1. 기기에서 처리되는 정보</h2>
       <ul>
-        <li>No OCR implementation is active.</li>
-        <li>No prescription image or OCR text upload path exists.</li>
-        <li>No account, analytics, ads, Firebase Analytics, or remote configuration is included.</li>
-        <li>The Android app manifest does not request Internet permission in Goal 00.</li>
+        <li>처방·약봉지 이미지, OCR 텍스트, 인식된 약 정보, 촬영된 복용법, 매칭 결과는
+          <strong>오직 사용자의 기기에서만</strong> 처리됩니다.</li>
+        <li>이 정보는 어디에도 업로드되지 않습니다. 계정·로그인이 없습니다.</li>
       </ul>
 
-      <h2>Intended production boundaries</h2>
+      <h2>2. 기기를 벗어나는 정보</h2>
       <ul>
-        <li>Prescription images and OCR text remain on device.</li>
-        <li>Official public medicine data is downloaded only as generic signed artifacts.</li>
-        <li>Saved prescription history is optional and encrypted.</li>
-        <li>User support should not request unredacted prescriptions by default.</li>
+        <li>사용자의 스캔에서 파생된 어떤 정보도 외부로 전송되지 않습니다.</li>
+        <li>공식 데이터 업데이트가 활성화되면, 유일한 네트워크 요청은 모든 사용자에게
+          동일한 <strong>서명된 공용 의약품 데이터베이스</strong>를 HTTPS로 내려받는 것뿐이며,
+          이는 사용자의 스캔 내용과 무관합니다.</li>
+        <li>공식 출처 링크 열기는 사용자가 직접 수행하는 명시적 동작입니다.</li>
       </ul>
+
+      <h2>3. 저장 및 보관</h2>
+      <ul>
+        <li>처방 기록 저장은 <strong>기본 꺼짐</strong>(옵트인)입니다.</li>
+        <li>원본 이미지 보관도 <strong>기본 꺼짐</strong>이며, 켜더라도 기기에서 암호화되어
+          저장됩니다.</li>
+        <li>저장 시 기록은 Android 키스토어로 보호되는 키로 <strong>암호화된 비공개
+          데이터베이스</strong>에 보관됩니다.</li>
+        <li>임시 스캔 이미지는 취소·완료 시, 그리고 앱 시작 시 삭제됩니다.</li>
+        <li>백업 및 기기 간 전송에서 앱 데이터는 제외됩니다.</li>
+      </ul>
+
+      <h2>4. 삭제</h2>
+      <ul>
+        <li>"스캔 폐기"는 임시 이미지와 스캔 데이터를 삭제합니다.</li>
+        <li>"기록 삭제"는 해당 기록과 보관된 이미지를 삭제합니다.</li>
+        <li>"모든 데이터 삭제"는 비공개 데이터베이스, 보관 이미지, 암호화 키, 캐시를
+          삭제합니다. 키를 파기하면 잔여 암호화 데이터는 복구할 수 없습니다.</li>
+      </ul>
+
+      <h2>5. 제3자</h2>
+      <ul>
+        <li>온디바이스 문자 인식에 Google ML Kit의 <strong>번들 한국어 모델</strong>을
+          사용하며, 인식은 기기에서 로컬로 수행됩니다.</li>
+        <li>분석(애널리틱스)·광고·트래커·원격 크래시 수집 SDK는 포함하지 않습니다.</li>
+      </ul>
+
+      <h2>6. 데이터 출처</h2>
+      <p>
+        공식 의약품 데이터는 대한민국 식품의약품안전처(MFDS) 공공데이터에서 가져오며, 앱은
+        제공기관·데이터셋·품목코드·기준일·데이터 버전을 함께 표시합니다.
+      </p>
+
+      <h2>7. 아동</h2>
+      <p>본 앱은 일반 정보 도우미로, 아동을 대상으로 하지 않으며 아동의 개인정보를 의도적으로
+        수집하지 않습니다.</p>
+
+      <h2>8. 방침 변경</h2>
+      <p>기능이 추가되면 본 방침을 실제 동작에 맞게 갱신하고 상단의 최종 업데이트 날짜를
+        변경합니다.</p>
+
+      <h2>9. 문의</h2>
+      <p class="note">문의: <a href="mailto:CONTACT_EMAIL_PLACEHOLDER">[연락처 이메일 — 배포 전 기재]</a>
+        · 지원 과정에서 가려지지 않은 처방을 요청하지 않습니다.</p>
+
+      <div class="lang"></div>
+      <h1>Privacy Policy</h1>
+      <p class="meta">Last updated: 2026-06-23 · Applies to: RxScan Android app</p>
+
+      <p>
+        RxScan is an information aid that analyzes a dispensing-bag/prescription photo
+        <strong>entirely on your device</strong> to recognize medicine names and directions
+        and look up official medicine information. It does not diagnose or prescribe.
+      </p>
+
+      <h2>1. Processed on the device</h2>
+      <ul>
+        <li>Prescription images, OCR text, recognized medicine fields, photographed
+          directions, and match results are processed <strong>only on your device</strong>.</li>
+        <li>None of this is uploaded. There is no account and no sign-in.</li>
+      </ul>
+
+      <h2>2. What leaves the device</h2>
+      <ul>
+        <li>Nothing derived from your scan is sent anywhere.</li>
+        <li>When public-data updates are enabled, the only network request is downloading a
+          generic, <strong>signed public medicine database</strong> over HTTPS — identical for
+          every user and unrelated to your scan.</li>
+        <li>Opening an official source link is an explicit action you take.</li>
+      </ul>
+
+      <h2>3. Storage and retention</h2>
+      <ul>
+        <li>Prescription history is <strong>off by default</strong> (opt-in).</li>
+        <li>Original image retention is <strong>off by default</strong>; when enabled it is
+          stored encrypted on-device only.</li>
+        <li>Saved history lives in an encrypted private database whose key is protected by the
+          Android Keystore.</li>
+        <li>Temporary scan images are deleted on cancel, on finalize, and on app startup.</li>
+        <li>Backups and device-to-device transfer exclude all app data.</li>
+      </ul>
+
+      <h2>4. Deletion</h2>
+      <ul>
+        <li>"Discard scan" removes the temporary image and scan data.</li>
+        <li>"Delete prescription" removes that record and its retained image.</li>
+        <li>"Delete all data" removes the private database, retained images, the wrapped key,
+          and caches; destroying the key renders any residual encrypted data unrecoverable.</li>
+      </ul>
+
+      <h2>5. Third parties</h2>
+      <ul>
+        <li>On-device text recognition uses Google ML Kit's <strong>bundled</strong> Korean
+          model; recognition runs locally.</li>
+        <li>No analytics, advertising, trackers, or remote crash-reporting SDKs are included.</li>
+      </ul>
+
+      <h2>6. Data source</h2>
+      <p>Official medicine data comes from the Korea MFDS public datasets; the app shows the
+        source agency, dataset, item code, date, and data version.</p>
+
+      <h2>7. Children</h2>
+      <p>The app is a general information aid, is not directed at children, and does not
+        knowingly collect children's personal data.</p>
+
+      <h2>8. Changes</h2>
+      <p>This policy will be updated to match actual behavior as features ship, with the
+        "Last updated" date changed accordingly.</p>
+
+      <h2>9. Contact</h2>
+      <p class="note">Contact: <a href="mailto:CONTACT_EMAIL_PLACEHOLDER">[contact email — set before release]</a>
+        · Support never asks you to send an unredacted prescription.</p>
     </main>
   </body>
 </html>
-
