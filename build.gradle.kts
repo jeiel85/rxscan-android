@@ -135,6 +135,9 @@ configure(subprojects.filter { it.path in androidLibraryProjects }) {
             ":data:publicdb" -> {
                 add("implementation", project(":core:model"))
             }
+            ":data:privatedb" -> {
+                add("implementation", project(":core:security"))
+            }
             ":engine:dur" -> {
                 add("implementation", project(":core:model"))
             }

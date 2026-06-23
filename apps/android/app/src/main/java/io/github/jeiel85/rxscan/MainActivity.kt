@@ -1,6 +1,7 @@
 package io.github.jeiel85.rxscan
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.getValue
@@ -20,6 +21,9 @@ private enum class Screen { HOME, SCAN, REVIEW, SAFETY }
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Protect private screens from recents thumbnails and screenshots
+        // (07_SECURITY_PRIVACY.md §3; PrivacySettings.protectScreenshots defaults on).
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
         setContent {
             RxScanTheme {
                 var screen by remember { mutableStateOf(Screen.HOME) }

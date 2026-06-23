@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Network policy (02_SYSTEM_ARCHITECTURE.md §6, 07_SECURITY_PRIVACY.md §3).
+  Cleartext traffic is disabled app-wide. The app makes no scan-derived requests;
+  the only production network use is signed public-data artifact download over HTTPS.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
