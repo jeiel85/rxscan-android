@@ -1,0 +1,28 @@
+<ko-KR>
+RxScan 첫 내부 테스트 버전입니다.
+- 약봉지 사진을 기기 안에서만 분석하도록 준비했습니다.
+- 인식한 약은 반드시 직접 확인하는 검토 단계를 거칩니다.
+- 공식 의약품 정보를 출처·기준일과 함께 보여줍니다.
+계정이나 사진 업로드 없이 동작합니다. 사용해 보시고 의견을 들려주세요.
+</ko-KR>
+<en-US>
+First internal test build of RxScan.
+- Dispensing-bag photos are analyzed only on your device.
+- Every recognized medicine goes through a manual review step.
+- Official medicine information is shown with its source and date.
+Works with no account and no photo upload. We'd love your feedback.
+</en-US>
+<ja-JP>
+RxScan の最初の内部テスト版です。
+- 薬袋の写真は端末内だけで解析します。
+- 認識した薬は必ず手動で確認する手順を通ります。
+- 公式の医薬品情報を出典・基準日とともに表示します。
+アカウントや写真アップロードなしで動作します。ご意見をお寄せください。
+</ja-JP>
+<zh-CN>
+RxScan 首个内部测试版本。
+- 药袋照片仅在您的设备上分析。
+- 每个识别到的药品都需经过手动确认步骤。
+- 同时显示官方药品信息及其来源与基准日期。
+无需账号、无需上传照片即可使用。欢迎试用并反馈。
+</zh-CN>

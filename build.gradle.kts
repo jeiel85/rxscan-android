@@ -48,16 +48,43 @@ project(":app") {
     apply(plugin = "com.android.application")
     apply(plugin = "org.jetbrains.kotlin.plugin.compose")
 
+    // Release signing is read from keystore.properties (gitignored). When absent
+    // (e.g. CI, which only assembles debug), the release build is left unsigned.
+    val keystorePropertiesFile = rootProject.file("keystore.properties")
+    val keystoreProperties = java.util.Properties().apply {
+        if (keystorePropertiesFile.exists()) keystorePropertiesFile.inputStream().use { load(it) }
+    }
+
     extensions.configure<ApplicationExtension>("android") {
         namespace = appNamespace
         compileSdk = compileApi
 
         defaultConfig {
-            applicationId = "$appNamespace.placeholder"
+            applicationId = appNamespace
             minSdk = minimumApi
             targetSdk = targetApi
-            versionCode = 1
-            versionName = "0.0.1"
+            versionCode = 2
+            versionName = "0.1.0"
+        }
+
+        if (keystorePropertiesFile.exists()) {
+            signingConfigs {
+                create("release") {
+                    storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
+                    storePassword = keystoreProperties.getProperty("storePassword")
+                    keyAlias = keystoreProperties.getProperty("keyAlias")
+                    keyPassword = keystoreProperties.getProperty("keyPassword")
+                }
+            }
+        }
+
+        buildTypes {
+            getByName("release") {
+                isMinifyEnabled = false
+                if (keystorePropertiesFile.exists()) {
+                    signingConfig = signingConfigs.getByName("release")
+                }
+            }
         }
 
         buildFeatures {

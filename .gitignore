@@ -4,6 +4,8 @@
 build/
 captures/
 local.properties
+keystore.properties
+.keystore/
 *.iml
 *.keystore
 *.jks
